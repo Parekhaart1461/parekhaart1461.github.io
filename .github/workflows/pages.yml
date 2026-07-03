@@ -40,12 +40,15 @@ jobs:
                   s = p.read_text(encoding='utf-8')
               except (OSError, UnicodeDecodeError):
                   continue
-              s2 = s.replace('<!-- 8189c3cba16581b56aa2ec27e4c0441c31307529137ace -->', gm)
-              s2 = s2.replace('<!-- 384bec2177140789823e29f667346fa16bb417f3bb7c -->', bm)
+              s2 = s
+              if gm:
+                  s2 = s2.replace('<!-- 50c38d7ff2ee6189106d836c6a95b9 -->', gm)
+              if bm:
+                  s2 = s2.replace('<!-- b21eeb92a265d3462b4cad -->', bm)
               if s2 != s:
                   p.write_text(s2, encoding='utf-8')
                   count += 1
-          if count == 0:
+          if count == 0 and (gm or bm):
               sys.exit(1)
           "
       - uses: actions/upload-pages-artifact@v3
